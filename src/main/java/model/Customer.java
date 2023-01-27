@@ -1,5 +1,7 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+
 import java.util.Objects;
 
 public class Customer {
@@ -30,6 +32,7 @@ public class Customer {
     public Customer() {
     }
 
+    @JsonGetter
     public int getCustomerId() {
         return customerId;
     }
@@ -38,6 +41,7 @@ public class Customer {
         this.customerId = customerId;
     }
 
+    @JsonGetter
     public String getFirstName() {
         return firstName;
     }
@@ -46,6 +50,7 @@ public class Customer {
         this.firstName = firstName;
     }
 
+    @JsonGetter
     public String getSecondName() {
         return secondName;
     }
@@ -54,6 +59,7 @@ public class Customer {
         this.secondName = secondName;
     }
 
+    @JsonGetter
     public String getPhone() {
         return phone;
     }
@@ -62,6 +68,7 @@ public class Customer {
         this.phone = phone;
     }
 
+    @JsonGetter
     public String getEmail() {
         return email;
     }
@@ -70,6 +77,7 @@ public class Customer {
         this.email = email;
     }
 
+    @JsonGetter
     public LoyaltyCard getLoyaltyCard() {
         return loyaltyCard;
     }

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+
+    <xsd:element name ="order_delivery">
+<xsd:complexType>
+    <xsd:sequence>
+        <xsd:element name ="price" type ="xsd:double"/>
+        <xsd:element name = "customer" type = "customer"/>
+        <xsd:element name = "courier" type ="courier"/>
+        <xsd:element name = "cafe" type = "cafe"/>
+        <xsd:element name = "delivery_provider" type="delivery_provider"/>
+        <xsd:element name = "payment_type" type="payment_type"/>
+    </xsd:sequence>
+    <xsd:attribute name = "id" type="xsd:ID">
+    </xsd:attribute>
+</xsd:complexType>
+    </xsd:element>
+
+<xsd:complexType name ="customer">
+  <xsd:sequence>
+    <xsd:element name = "first_name" type ="xsd:string"/>
+    <xsd:element name = "second_name" type = "xsd:string"/>
+    <xsd:element name = "phone" type = "xsd:string"/>
+    <xsd:element name = "email" type = "xsd:string"/>
+  </xsd:sequence>
+    <xsd:attribute name = "id" type="xsd:ID">
+    </xsd:attribute>
+</xsd:complexType>
+
+ <xsd:complexType name = "courier">
+ <xsd:sequence>
+     <xsd:element name ="first_name" type ="xsd:string"/>
+     <xsd:element name ="last_name" type ="xsd:string"/>
+ </xsd:sequence>
+     <xsd:attribute name = "id" type="xsd:ID">
+     </xsd:attribute>
+ </xsd:complexType>
+
+    <xsd:complexType name = "cafe">
+        <xsd:sequence>
+            <xsd:element name ="cafe_name" type ="xsd:string"/>
+        </xsd:sequence>
+        <xsd:attribute name = "id" type="xsd:ID">
+        </xsd:attribute>
+    </xsd:complexType>
+
+    <xsd:complexType name = "delivery_provider">
+        <xsd:sequence>
+            <xsd:element name ="provider_name" type ="xsd:string"/>
+        </xsd:sequence>
+        <xsd:attribute name = "id" type="xsd:ID">
+        </xsd:attribute>
+    </xsd:complexType>
+
+    <xsd:complexType name = "payment_type">
+        <xsd:sequence>
+            <xsd:element name ="name" type ="xsd:string"/>
+        </xsd:sequence>
+        <xsd:attribute name = "id" type="xsd:ID">
+        </xsd:attribute>
+    </xsd:complexType>
+
+</xsd:schema>

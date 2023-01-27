@@ -1,5 +1,7 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+
 import java.util.Objects;
 
 public class PaymentType {
@@ -13,7 +15,7 @@ public class PaymentType {
 
     public PaymentType (){
     }
-
+    @JsonGetter
     public int getIdPaymentType() {
         return idPaymentType;
     }
@@ -21,7 +23,7 @@ public class PaymentType {
     public void setIdPaymentType(int idPaymentType) {
         this.idPaymentType = idPaymentType;
     }
-
+    @JsonGetter
     public String getName() {
         return name;
     }

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<order_delivery id="1">
+    <price>1200</price>
+    <customer id="1">
+        <first_name>Somename</first_name>
+        <second_name>Somesurname</second_name>
+        <phone>380931231231</phone>
+        <email>mailmail@mail.com</email>
+    </customer>
+    <courier id="1">
+        <first_name>Somename1</first_name>
+        <last_name>Somesurname</last_name>
+    </courier>
+    <cafe id="1">
+        <cafe_name>DiscomfortTown</cafe_name>
+    </cafe>
+    <delivery_provider id="1">
+        <provider_name>Glovo</provider_name>
+    </delivery_provider>
+    <payment_type id="1">
+        <name>GooglePay</name>
+    </payment_type>
+</order_delivery>

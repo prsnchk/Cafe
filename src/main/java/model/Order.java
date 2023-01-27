@@ -1,5 +1,7 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+
 import java.util.List;
 import java.util.Objects;
 
@@ -24,6 +26,7 @@ public class Order {
     public Order() {
     }
 
+    @JsonGetter
     public int getOrderID() {
         return orderID;
     }
@@ -31,7 +34,7 @@ public class Order {
     public void setOrderID(int orderID) {
         this.orderID = orderID;
     }
-
+    @JsonGetter
     public double getPrice() {
         return price;
     }
@@ -39,31 +42,28 @@ public class Order {
     public void setPrice(double price) {
         this.price = price;
     }
-
+    @JsonGetter
     public Customer getCustomer() {
         return customer;
     }
-
     public void setCustomer(Customer customer) {
         this.customer = customer;
     }
-
+    @JsonGetter
     public Waiter getWaiter() {
         return waiter;
     }
-
     public void setWaiter(Waiter waiter) {
         this.waiter = waiter;
     }
-
+    @JsonGetter
     public Cafe getCafe() {
         return cafe;
     }
-
     public void setCafe(Cafe cafe) {
         this.cafe = cafe;
     }
-
+    @JsonGetter
     public PaymentType getPaymentType() {
         return paymentType;
     }
