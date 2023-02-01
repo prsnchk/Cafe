@@ -1,9 +1,8 @@
 package service;
 
-import dao.CustomerDaoImpl;
+import jdbc.CustomerDaoImpl;
 import model.Customer;
 
-import java.sql.Connection;
 import java.util.List;
 
 public class CustomerService {

@@ -1,12 +1,7 @@
-import connection.BasicConnectionPool;
 import model.*;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeAll;
 import service.*;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 
 public class JdbcTest {

@@ -1,9 +1,8 @@
 package service;
 
-import dao.WaiterDaoImpl;
+import jdbc.WaiterDaoImpl;
 import model.Waiter;
 
-import java.sql.Connection;
 import java.util.List;
 
 public class WaiterService {

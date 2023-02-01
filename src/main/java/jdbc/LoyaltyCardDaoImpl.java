@@ -1,7 +1,8 @@
-package dao;
+package jdbc;
 
+import connectionPool.DBCPDataSource;
+import dao.Dao;
 import model.LoyaltyCard;
-import util.JdbcUtil;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -11,12 +12,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LoyaltyCardDaoImpl extends Dao<LoyaltyCard, Integer> {
-    Connection connection = JdbcUtil.getConnection();
+
 
     @Override
     public List<LoyaltyCard> getAll() {
         List<LoyaltyCard> loyaltyCards = new ArrayList<>();
-        try (Statement statement = connection.createStatement()) {
+        try (Connection connection = DBCPDataSource.getConnection()) {
+            Statement statement = connection.createStatement();
             statement.executeQuery("SELECT * FROM LoyaltyCard");
             ResultSet rs = statement.getResultSet();
             while(rs.next())
@@ -36,7 +38,8 @@ public class LoyaltyCardDaoImpl extends Dao<LoyaltyCard, Integer> {
     @Override
     public LoyaltyCard getEntityById(Integer id) {
         LoyaltyCard receivedLoyaltyCard= new LoyaltyCard();
-        try (Statement statement = connection.createStatement()) {
+        try (Connection connection = DBCPDataSource.getConnection()) {
+            Statement statement = connection.createStatement();
             statement.executeQuery("SELECT * FROM LoyaltyCard WHERE id_loyalty_card = " + id);
             ResultSet rs = statement.getResultSet();
             while(rs.next())
@@ -55,7 +58,8 @@ public class LoyaltyCardDaoImpl extends Dao<LoyaltyCard, Integer> {
 
     @Override
     public void update(LoyaltyCard loyaltyCard) {
-        try (Statement statement = connection.createStatement()) {
+        try (Connection connection = DBCPDataSource.getConnection()) {
+            Statement statement = connection.createStatement();
             statement.execute("UPDATE LoyaltyCard SET discount = " + loyaltyCard.getDiscount() + ","
                     + "points_balance = " + loyaltyCard.getPointsBalance()
                     + " WHERE id_loyalty_card ="
@@ -68,7 +72,8 @@ public class LoyaltyCardDaoImpl extends Dao<LoyaltyCard, Integer> {
 
     @Override
     public void save(LoyaltyCard loyaltyCard) {
-        try (Statement statement = connection.createStatement()) {
+        try (Connection connection = DBCPDataSource.getConnection()) {
+            Statement statement = connection.createStatement();
             statement.execute("INSERT INTO LoyaltyCard (id_loyalty_card, discount, points_balance ) VALUES ("
                     + loyaltyCard.getIdLoyaltyCard() + ", "
                     + loyaltyCard.getDiscount() + ", "
@@ -80,7 +85,8 @@ public class LoyaltyCardDaoImpl extends Dao<LoyaltyCard, Integer> {
 
     @Override
     public void delete(Integer id) {
-        try (Statement statement = connection.createStatement()) {
+        try (Connection connection = DBCPDataSource.getConnection()) {
+            Statement statement = connection.createStatement();
             statement.execute("DELETE FROM LoyaltyCard WHERE id_loyalty_card=" + id);
         } catch (SQLException e) {
             throw new RuntimeException(e);

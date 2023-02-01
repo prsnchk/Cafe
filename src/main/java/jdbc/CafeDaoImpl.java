@@ -1,7 +1,8 @@
-package dao;
+package jdbc;
 
+import connectionPool.DBCPDataSource;
+import dao.Dao;
 import model.Cafe;
-import util.JdbcUtil;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -11,12 +12,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CafeDaoImpl extends Dao<Cafe, Integer>{
-    Connection connection = JdbcUtil.getConnection();
 
     @Override
     public List<Cafe> getAll() {
         List<Cafe> Cafes = new ArrayList<>();
-        try (Statement statement = connection.createStatement()) {
+        try (Connection connection = DBCPDataSource.getConnection()) {
+            Statement statement = connection.createStatement();
             statement.executeQuery("SELECT * FROM Cafe");
             ResultSet rs = statement.getResultSet();
             while(rs.next())
@@ -35,7 +36,8 @@ public class CafeDaoImpl extends Dao<Cafe, Integer>{
     @Override
     public Cafe getEntityById(Integer id) {
         Cafe receivedCafe  = new Cafe ();
-        try (Statement statement = connection.createStatement()) {
+        try (Connection connection = DBCPDataSource.getConnection()) {
+            Statement statement = connection.createStatement();
             statement.executeQuery("SELECT * FROM Cafe  WHERE id = " + id);
             ResultSet rs = statement.getResultSet();
             while(rs.next())
@@ -51,7 +53,8 @@ public class CafeDaoImpl extends Dao<Cafe, Integer>{
 
     @Override
     public void update(Cafe cafe) {
-        try (Statement statement = connection.createStatement()) {
+        try (Connection connection = DBCPDataSource.getConnection()) {
+            Statement statement = connection.createStatement();
             statement.execute("UPDATE Cafe SET cafe_name = '"
                     + cafe.getCafeName() + "' WHERE id="
                     + cafe.getId() + ";");
@@ -63,7 +66,8 @@ public class CafeDaoImpl extends Dao<Cafe, Integer>{
 
     @Override
     public void delete(Integer id) {
-        try (Statement statement = connection.createStatement()) {
+        try (Connection connection = DBCPDataSource.getConnection()) {
+            Statement statement = connection.createStatement();
             statement.execute("DELETE FROM Cafe WHERE id=" + id);
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -72,7 +76,8 @@ public class CafeDaoImpl extends Dao<Cafe, Integer>{
 
     @Override
     public void save(Cafe cafe) {
-        try (Statement statement = connection.createStatement()) {
+        try (Connection connection = DBCPDataSource.getConnection()) {
+            Statement statement = connection.createStatement();
             statement.execute("INSERT INTO Cafe (id, cafe_name) VALUES ("
                     + cafe.getId() + ", '"
                     + cafe.getCafeName() + "');");

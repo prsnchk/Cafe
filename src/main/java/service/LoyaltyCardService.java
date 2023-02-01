@@ -1,9 +1,8 @@
 package service;
 
-import dao.LoyaltyCardDaoImpl;
+import jdbc.LoyaltyCardDaoImpl;
 import model.LoyaltyCard;
 
-import java.sql.Connection;
 import java.util.List;
 
 public class LoyaltyCardService {
@@ -17,15 +16,15 @@ public class LoyaltyCardService {
         return loyaltyCardDao.getEntityById(id);
     }
 
-    public void updateLoyaltyCard(LoyaltyCard lc){
-        loyaltyCardDao.update(lc);
+    public void updateLoyaltyCard(LoyaltyCard loyaltyCard){
+        loyaltyCardDao.update(loyaltyCard);
     }
 
-    public void saveLoyaltyCard(LoyaltyCard lc){
-        loyaltyCardDao.save(lc);
+    public void saveLoyaltyCard(LoyaltyCard loyaltyCard){
+        loyaltyCardDao.save(loyaltyCard);
     }
 
-    public void deleteLoyaltyCard(LoyaltyCard lc){
-        loyaltyCardDao.delete(lc.getIdLoyaltyCard());
+    public void deleteLoyaltyCard(LoyaltyCard loyaltyCard){
+        loyaltyCardDao.delete(loyaltyCard.getIdLoyaltyCard());
     }
 }

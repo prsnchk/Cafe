@@ -1,7 +1,8 @@
-package dao;
+package jdbc;
 
+import connectionPool.DBCPDataSource;
+import dao.Dao;
 import model.MenuItems;
-import util.JdbcUtil;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -11,14 +12,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MenuItemsDaoImpl extends Dao<MenuItems, Integer>{
-    Connection connection = JdbcUtil.getConnection();
+public class MenuItemsDaoImpl extends Dao<MenuItems, Integer> {
 
     @Override
     public List<MenuItems> getAll() {
         List<MenuItems> MenuItems = new ArrayList<>();
-        Connection connection = JdbcUtil.getConnection();
-        try (Statement statement = connection.createStatement()) {
+        try (Connection connection = DBCPDataSource.getConnection()) {
+            Statement statement = connection.createStatement();
             statement.executeQuery("SELECT * FROM Menu_Items");
             ResultSet rs = statement.getResultSet();
             while(rs.next())
@@ -38,8 +38,8 @@ public class MenuItemsDaoImpl extends Dao<MenuItems, Integer>{
     @Override
     public MenuItems getEntityById (Integer id) {
         MenuItems receivedMenuItems = new MenuItems();
-        Connection connection = JdbcUtil.getConnection();
-        try (Statement statement = connection.createStatement()) {
+        try (Connection connection = DBCPDataSource.getConnection()) {
+            Statement statement = connection.createStatement();
             statement.executeQuery("SELECT * FROM Menu_items WHERE id_menu = " + id);
             ResultSet rs = statement.getResultSet();
             while(rs.next())
@@ -57,8 +57,8 @@ public class MenuItemsDaoImpl extends Dao<MenuItems, Integer>{
 
     @Override
     public void update (MenuItems menuItems) {
-        Connection connection = JdbcUtil.getConnection();
-        try (Statement statement = connection.createStatement()) {
+        try (Connection connection = DBCPDataSource.getConnection()) {
+            Statement statement = connection.createStatement();
             statement.execute("UPDATE Menu_items SET name_ukr = '" + menuItems.getNameUkr() + "', "
                     + "name_eng = '" + menuItems.getNameEng() + "', "
                     + "price = " + menuItems.getPrice() + ";");
@@ -71,8 +71,8 @@ public class MenuItemsDaoImpl extends Dao<MenuItems, Integer>{
 
     @Override
     public void save(MenuItems menuItems) {
-        Connection connection = JdbcUtil.getConnection();
-        try (Statement statement = connection.createStatement()) {
+        try (Connection connection = DBCPDataSource.getConnection()) {
+            Statement statement = connection.createStatement();
             statement.execute("INSERT INTO Menu_items (id_menu, name_ukr, name_eng, price ) VALUES ("
                     + menuItems.getMenuId() + ", '"
                     + menuItems.getNameUkr() + "', '"
@@ -87,8 +87,8 @@ public class MenuItemsDaoImpl extends Dao<MenuItems, Integer>{
 
     @Override
     public void delete(Integer id) {
-        Connection connection = JdbcUtil.getConnection();
-        try (Statement statement = connection.createStatement()) {
+        try (Connection connection = DBCPDataSource.getConnection()) {
+            Statement statement = connection.createStatement();
             statement.execute("DELETE FROM Menu_items WHERE id_menu=" + id);
         } catch (SQLException e) {
             throw new RuntimeException(e);

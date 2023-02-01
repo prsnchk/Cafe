@@ -1,8 +1,10 @@
-package dao;
+package jdbc;
 
+import connectionPool.DBCPDataSource;
+import dao.Dao;
 import model.Customer;
 import model.LoyaltyCard;
-import util.JdbcUtil;
+
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -12,15 +14,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerDaoImpl extends Dao<Customer, Integer> {
-    Connection connection = JdbcUtil.getConnection();
+
     LoyaltyCardDaoImpl loyaltyCardDaoImpl = new LoyaltyCardDaoImpl();
 
-    //Отримати всіх клієнтів
     @Override
     public List<Customer> getAll() {
         List<Customer> customers = new ArrayList<>();
-        Connection connection = JdbcUtil.getConnection();
-        try (Statement statement = connection.createStatement()) {
+        try (Connection connection = DBCPDataSource.getConnection()) {
+            Statement statement = connection.createStatement();
             statement.executeQuery("SELECT * FROM Customer");
             ResultSet rs = statement.getResultSet();
             while(rs.next())
@@ -32,9 +33,9 @@ public class CustomerDaoImpl extends Dao<Customer, Integer> {
                 newCustomer.setPhone(rs.getString("phone"));
                 newCustomer.setEmail(rs.getString("email"));
                 //LoyaltyCard
-                int lcId = rs.getInt("loyalty_card_id");
-                LoyaltyCard lc = loyaltyCardDaoImpl.getEntityById(lcId);
-                newCustomer.setLoyaltyCard(lc);
+                int loyaltyCardId = rs.getInt("loyalty_card_id");
+                LoyaltyCard loyaltyCard = loyaltyCardDaoImpl.getEntityById(loyaltyCardId);
+                newCustomer.setLoyaltyCard(loyaltyCard);
 
                 customers.add(newCustomer);
             }
@@ -43,12 +44,12 @@ public class CustomerDaoImpl extends Dao<Customer, Integer> {
             throw new RuntimeException(e);
         }
     }
-    //Отримати клієнта за ідентифікатором
+
     @Override
     public Customer getEntityById (Integer id) {
         Customer receivedCustomer = new Customer();
-        Connection connection = JdbcUtil.getConnection();
-        try (Statement statement = connection.createStatement()) {
+        try (Connection connection = DBCPDataSource.getConnection()) {
+            Statement statement = connection.createStatement();
             statement.executeQuery("SELECT * FROM Customer WHERE id_customer = " + id);
             ResultSet rs = statement.getResultSet();
             while(rs.next())
@@ -59,20 +60,20 @@ public class CustomerDaoImpl extends Dao<Customer, Integer> {
                 receivedCustomer.setPhone(rs.getString("phone"));
                 receivedCustomer.setEmail(rs.getString("email"));
                 //LoyaltyCard
-                int lcId = rs.getInt("loyalty_card_id");
-                LoyaltyCard lc = loyaltyCardDaoImpl.getEntityById(lcId);
-                receivedCustomer.setLoyaltyCard(lc);
+                int loyaltyCardId = rs.getInt("loyalty_card_id");
+                LoyaltyCard loyaltyCard = loyaltyCardDaoImpl.getEntityById(loyaltyCardId);
+                receivedCustomer.setLoyaltyCard(loyaltyCard);
             }
             return receivedCustomer;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
-    //Оновити клієнта
+
     @Override
     public void update (Customer customer) {
-        Connection connection = JdbcUtil.getConnection();
-        try (Statement statement = connection.createStatement()) {
+        try (Connection connection = DBCPDataSource.getConnection()) {
+            Statement statement = connection.createStatement();
             statement.execute("UPDATE Customer SET first_name = '" + customer.getFirstName() + "', "
                             + "second_name = '" + customer.getSecondName() + "', "
                             + "phone = '" + customer.getPhone() + "', "
@@ -85,11 +86,11 @@ public class CustomerDaoImpl extends Dao<Customer, Integer> {
         }
     }
 
-    //Зберегти кліента
+
     @Override
     public void save(Customer customer) {
-        Connection connection = JdbcUtil.getConnection();
-        try (Statement statement = connection.createStatement()) {
+        try (Connection connection = DBCPDataSource.getConnection()) {
+            Statement statement = connection.createStatement();
             statement.execute("INSERT INTO Customer (id_customer, first_name, second_name, phone, email, loyalty_card_id ) VALUES ("
                     + customer.getCustomerId() + ", '"
                     + customer.getFirstName() + "', '"
@@ -102,11 +103,11 @@ public class CustomerDaoImpl extends Dao<Customer, Integer> {
         }
 
     }
-    //Видалити клієнта
+
     @Override
     public void delete(Integer id) {
-        Connection connection = JdbcUtil.getConnection();
-        try (Statement statement = connection.createStatement()) {
+        try (Connection connection = DBCPDataSource.getConnection()) {
+            Statement statement = connection.createStatement();
             statement.execute("DELETE FROM Customer WHERE id_customer=" + id);
         } catch (SQLException e) {
             throw new RuntimeException(e);

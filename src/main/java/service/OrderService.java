@@ -1,9 +1,8 @@
 package service;
 
-import dao.OrderDaoImpl;
+import jdbc.OrderDaoImpl;
 import model.Order;
 
-import java.sql.Connection;
 import java.util.List;
 
 public class OrderService {

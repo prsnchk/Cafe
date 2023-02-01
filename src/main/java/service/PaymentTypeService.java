@@ -1,9 +1,8 @@
 package service;
 
-import dao.PaymentTypeDaoImpl;
+import jdbc.PaymentTypeDaoImpl;
 import model.PaymentType;
 
-import java.sql.Connection;
 import java.util.List;
 
 public class PaymentTypeService {

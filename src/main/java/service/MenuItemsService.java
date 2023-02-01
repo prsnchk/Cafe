@@ -1,10 +1,9 @@
 package service;
 
-import dao.MenuItemsDaoImpl;
+import jdbc.MenuItemsDaoImpl;
 
 import model.MenuItems;
 
-import java.sql.Connection;
 import java.util.List;
 
 public class MenuItemsService {

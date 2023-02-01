@@ -1,9 +1,8 @@
 package service;
 
-import dao.CafeDaoImpl;
+import jdbc.CafeDaoImpl;
 import model.Cafe;
 
-import java.sql.Connection;
 import java.util.List;
 
 public class CafeService {

@@ -1,6 +1,5 @@
 package model;
 
-import com.fasterxml.jackson.annotation.JsonGetter;
 
 import java.util.Objects;
 
@@ -16,7 +15,7 @@ public class Cafe {
     public Cafe() {
     }
 
-    @JsonGetter
+
     public int getId() {
         return id;
     }
@@ -25,7 +24,7 @@ public class Cafe {
         this.id = id;
     }
 
-    @JsonGetter
+
     public String getCafeName() {
         return cafeName;
     }

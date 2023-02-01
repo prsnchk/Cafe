@@ -1,6 +1,6 @@
 package model;
 
-import com.fasterxml.jackson.annotation.JsonGetter;
+
 
 import java.util.Objects;
 
@@ -14,7 +14,7 @@ public class Waiter {
     }
     public Waiter() {
     }
-    @JsonGetter
+
     public int getId() {
         return id;
     }
@@ -22,7 +22,7 @@ public class Waiter {
     public void setId(int id) {
         this.id = id;
     }
-    @JsonGetter
+
     public String getFirstName() {
         return firstName;
     }

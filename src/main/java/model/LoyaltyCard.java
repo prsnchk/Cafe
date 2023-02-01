@@ -1,6 +1,5 @@
 package model;
 
-import com.fasterxml.jackson.annotation.JsonGetter;
 
 import java.util.Objects;
 
@@ -18,7 +17,7 @@ public class LoyaltyCard {
     public LoyaltyCard() {
     }
 
-    @JsonGetter
+
     public int getIdLoyaltyCard() {
         return idLoyaltyCard;
     }
@@ -27,7 +26,7 @@ public class LoyaltyCard {
         this.idLoyaltyCard = idLoyaltyCard;
     }
 
-    @JsonGetter
+
     public int getDiscount() {
         return discount;
     }
@@ -36,7 +35,7 @@ public class LoyaltyCard {
         this.discount = discount;
     }
 
-    @JsonGetter
+
     public String getPointsBalance() {
         return pointsBalance;
     }

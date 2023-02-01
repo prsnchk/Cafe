@@ -1,6 +1,6 @@
 package model;
 
-import com.fasterxml.jackson.annotation.JsonGetter;
+
 
 import java.util.Objects;
 
@@ -20,7 +20,7 @@ public class MenuItems {
     public MenuItems (){
     }
 
-    @JsonGetter
+
     public int getMenuId() {
         return menuId;
     }
@@ -29,7 +29,7 @@ public class MenuItems {
         this.menuId = menuId;
     }
 
-    @JsonGetter
+
     public String getNameUkr() {
         return nameUkr;
     }
@@ -38,7 +38,7 @@ public class MenuItems {
         this.nameUkr = nameUkr;
     }
 
-    @JsonGetter
+
     public String getNameEng() {
         return nameEng;
     }
@@ -47,7 +47,7 @@ public class MenuItems {
         this.nameEng = nameEng;
     }
 
-    @JsonGetter
+
     public int getPrice() {
         return price;
     }
