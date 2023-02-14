@@ -2,20 +2,28 @@ package connectionPool;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Properties;
 
 public class DBCPDataSource {
-
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/cafe";
-    private static final String DB_USERNAME = "root";
-    private static final String DB_PASSWORD = "1234";
     private static BasicDataSource ds = new BasicDataSource();
 
     static {
-        ds.setUrl(DB_URL);
-        ds.setUsername(DB_USERNAME);
-        ds.setPassword(DB_PASSWORD);
+        Properties properties = new Properties();
+        String filename = "src/main/resources/db.properties";
+        try {
+            FileInputStream fileInputStream = new FileInputStream(filename);
+            properties.load(fileInputStream);
+        } catch (IOException e) {
+            System.out.println("Error loading config for DB!");
+            throw new RuntimeException(e);
+        }
+        ds.setUrl(properties.getProperty("db_url"));
+        ds.setUsername(properties.getProperty("db_username"));
+        ds.setPassword(properties.getProperty("db_password"));
         ds.setMinIdle(5);
         ds.setMaxIdle(10);
         ds.setMaxOpenPreparedStatements(100);
