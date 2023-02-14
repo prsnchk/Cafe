@@ -2,6 +2,7 @@ package jdbc;
 
 import connectionPool.DBCPDataSource;
 import dao.Dao;
+import dao.PaymentTypeDao;
 import model.PaymentType;
 
 import java.sql.Connection;
@@ -11,7 +12,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PaymentTypeDaoImpl extends Dao<PaymentType, Integer> {
+public class PaymentTypeDaoImpl implements PaymentTypeDao {
 
 
     @Override

@@ -1,6 +1,7 @@
 package jdbc;
 
 import connectionPool.DBCPDataSource;
+import dao.CafeDao;
 import dao.Dao;
 import model.Cafe;
 
@@ -11,7 +12,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CafeDaoImpl extends Dao<Cafe, Integer>{
+public class CafeDaoImpl implements CafeDao {
 
     @Override
     public List<Cafe> getAll() {

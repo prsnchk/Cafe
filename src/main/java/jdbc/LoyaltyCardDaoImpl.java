@@ -2,6 +2,7 @@ package jdbc;
 
 import connectionPool.DBCPDataSource;
 import dao.Dao;
+import dao.LoyaltyCardDao;
 import model.LoyaltyCard;
 
 import java.sql.Connection;
@@ -11,7 +12,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LoyaltyCardDaoImpl extends Dao<LoyaltyCard, Integer> {
+public class LoyaltyCardDaoImpl implements LoyaltyCardDao {
 
 
     @Override

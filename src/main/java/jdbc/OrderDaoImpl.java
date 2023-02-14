@@ -2,6 +2,7 @@ package jdbc;
 
 import connectionPool.DBCPDataSource;
 import dao.Dao;
+import dao.OrderDao;
 import model.*;
 
 import java.sql.Connection;
@@ -11,7 +12,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrderDaoImpl extends Dao<Order, Integer> {
+public class OrderDaoImpl implements OrderDao {
 
     CustomerDaoImpl customerDaoImpl = new CustomerDaoImpl();
     WaiterDaoImpl waiterDaoImpl = new WaiterDaoImpl();

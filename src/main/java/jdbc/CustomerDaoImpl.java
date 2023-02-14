@@ -1,6 +1,7 @@
 package jdbc;
 
 import connectionPool.DBCPDataSource;
+import dao.CustomerDao;
 import dao.Dao;
 import model.Customer;
 import model.LoyaltyCard;
@@ -13,7 +14,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CustomerDaoImpl extends Dao<Customer, Integer> {
+public class CustomerDaoImpl implements CustomerDao {
 
     LoyaltyCardDaoImpl loyaltyCardDaoImpl = new LoyaltyCardDaoImpl();
 

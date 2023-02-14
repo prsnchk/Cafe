@@ -2,6 +2,7 @@ package jdbc;
 
 import connectionPool.DBCPDataSource;
 import dao.Dao;
+import dao.WaiterDao;
 import model.Waiter;
 
 import java.sql.Connection;
@@ -11,7 +12,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WaiterDaoImpl extends Dao<Waiter, Integer> {
+public class WaiterDaoImpl implements WaiterDao {
 
     @Override
     public List<Waiter> getAll() {

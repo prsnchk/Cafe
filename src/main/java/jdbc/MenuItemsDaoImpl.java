@@ -2,6 +2,7 @@ package jdbc;
 
 import connectionPool.DBCPDataSource;
 import dao.Dao;
+import dao.MenuItemsDao;
 import model.MenuItems;
 
 import java.sql.Connection;
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MenuItemsDaoImpl extends Dao<MenuItems, Integer> {
+public class MenuItemsDaoImpl implements MenuItemsDao {
 
     @Override
     public List<MenuItems> getAll() {

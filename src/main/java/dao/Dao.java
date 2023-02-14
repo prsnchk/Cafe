@@ -2,7 +2,7 @@ package dao;
 
 import java.util.List;
 
-public abstract class Dao <E, K> {
+public interface Dao <E, K> {
     public abstract List<E> getAll();
     public abstract E getEntityById(K id);
     public abstract void update(E entity);
