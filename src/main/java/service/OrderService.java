@@ -24,7 +24,7 @@ public class OrderService {
         orderDao.save(o);
     }
 
-    public void deletePaymentType(Order o){
+    public void deleteOrder(Order o){
         orderDao.delete(o.getOrderID());
     }
 }

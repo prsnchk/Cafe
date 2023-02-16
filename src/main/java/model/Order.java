@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -10,7 +11,7 @@ public class Order {
     private Waiter waiter;
     private Cafe cafe;
     private PaymentType paymentType;
-    public List<MenuItems> menuItemsList;
+    public List<MenuItems> menuItemsList = new ArrayList<>();
 
     public Order(int orderID, double price, Customer customer, Waiter waiter, Cafe cafe, PaymentType paymentType){
         this.orderID = orderID;
@@ -23,7 +24,6 @@ public class Order {
 
     public Order() {
     }
-
 
     public int getOrderID() {
         return orderID;
@@ -76,6 +76,22 @@ public class Order {
 
     public void setMenuItemsList(List<MenuItems> menuItemsList) {
         this.menuItemsList = menuItemsList;
+    }
+
+    public void addMenuItem(MenuItems menuItem){
+        menuItemsList.add(menuItem);
+    }
+
+    public void deleteMenuItem(MenuItems menuItem){
+        menuItemsList.remove(menuItem);
+    }
+
+    public void recalculatePrice(){
+        double result = 0;
+        for (MenuItems item : getMenuItemsList()){
+            result += item.getPrice();
+        }
+        setPrice(result);
     }
 
     @Override

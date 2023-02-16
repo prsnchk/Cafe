@@ -11,6 +11,7 @@ public class JdbcTest {
     private final LoyaltyCardService loyaltyCardService = new LoyaltyCardService();
     private final CafeService cafeService = new CafeService();
     private final CustomerService customerService = new CustomerService();
+    private final OrderService orderService = new OrderService();
 
     public JdbcTest() throws SQLException {
     }
@@ -153,5 +154,53 @@ public class JdbcTest {
         Waiter readWaiter2 = waiterService.getWaiterById(10);
         waiterService.deleteWaiter(testWaiter2);
         assert(readWaiter2.getFirstName().equals("Karinochka"));
+    }
+
+    //ORDER
+    @Test
+    public void addOrder(){
+        Waiter waiter1 = waiterService.getWaiterById(1);
+        Customer customer1 = customerService.getCustomerById(1);
+        Cafe cafe1 = cafeService.getCafeById(1);
+        PaymentType paymentType1 = paymentTypeService.getPaymentTypeById(1);
+        MenuItems menuItem1 = menuItemsService.getMenuItemsById(1);
+        MenuItems menuItem2 = menuItemsService.getMenuItemsById(2);
+        MenuItems menuItem3 = menuItemsService.getMenuItemsById(3);
+
+        Order order3 = new Order(3,100, customer1, waiter1, cafe1, paymentType1);
+        order3.addMenuItem(menuItem1);
+        order3.addMenuItem(menuItem2);
+        order3.addMenuItem(menuItem3);
+
+        orderService.saveOrder(order3);
+        Order readOrder = orderService.getOrderId(3);
+        orderService.deleteOrder(order3);
+        assert(order3.equals(readOrder));
+    }
+
+    @Test
+    public void updateOrder(){
+        Waiter waiter1 = waiterService.getWaiterById(1);
+        Customer customer1 = customerService.getCustomerById(1);
+        Cafe cafe1 = cafeService.getCafeById(1);
+        PaymentType paymentType1 = paymentTypeService.getPaymentTypeById(1);
+        MenuItems menuItem1 = menuItemsService.getMenuItemsById(1);
+        MenuItems menuItem2 = menuItemsService.getMenuItemsById(2);
+        MenuItems menuItem3 = menuItemsService.getMenuItemsById(3);
+
+        Order order3 = new Order(3,100, customer1, waiter1, cafe1, paymentType1);
+        order3.addMenuItem(menuItem1);
+        order3.addMenuItem(menuItem2);
+        order3.addMenuItem(menuItem3);
+
+        orderService.saveOrder(order3);
+        order3.recalculatePrice();
+        order3.deleteMenuItem(menuItem2);
+        orderService.updateOrder(order3);
+
+        Order readOrder = orderService.getOrderId(3);
+        orderService.deleteOrder(order3);
+        assert(readOrder.getPrice() == 300);
+        assert(readOrder.getMenuItemsList().size() == 2);
     }
 }

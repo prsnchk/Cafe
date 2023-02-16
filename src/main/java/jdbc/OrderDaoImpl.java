@@ -18,6 +18,7 @@ public class OrderDaoImpl implements OrderDao {
     WaiterDaoImpl waiterDaoImpl = new WaiterDaoImpl();
     CafeDaoImpl cafeDaoImpl = new CafeDaoImpl();
     PaymentTypeDaoImpl paymentTypeDaoImpl = new PaymentTypeDaoImpl();
+    MenuItemsDaoImpl menuItemsDaoImpl = new MenuItemsDaoImpl();
 
     @Override
     public List<Order> getAll() {
@@ -83,6 +84,16 @@ public class OrderDaoImpl implements OrderDao {
                 PaymentType paymentType = paymentTypeDaoImpl.getEntityById(paymentTypeId);
                 receivedOrder.setPaymentType(paymentType);
             }
+
+            Statement statement2 = connection.createStatement();
+            statement2.executeQuery("SELECT * FROM Order_items WHERE order_id= " + id);
+            ResultSet rs2 = statement2.getResultSet();
+            while (rs2.next()){
+                //MenuItem
+                int menuItemId = rs2.getInt("menu_id");
+                receivedOrder.addMenuItem(menuItemsDaoImpl.getEntityById(menuItemId));
+            }
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -97,8 +108,18 @@ public class OrderDaoImpl implements OrderDao {
                     + "customer_id = " + order.getCustomer().getCustomerId() + ", "
                     + "waiter_id = " + order.getWaiter().getId() + ", "
                     + "cafe_id = " + order.getCafe().getId() + ", "
-                    + "payment_type_id = " + order.getPaymentType().getIdPaymentType() + ", "
-                    + "WHERE order_id= " + order.getOrderID() + ";");
+                    + "payment_type_id = " + order.getPaymentType().getIdPaymentType() + " "
+                    + "WHERE order_id = " + order.getOrderID() + ";");
+
+            if (order.getMenuItemsList() != null) {
+                statement.execute("DELETE FROM Order_items WHERE order_id=" + order.getOrderID());
+                for (MenuItems item : order.getMenuItemsList()) {
+                    statement.execute("INSERT INTO Order_items (order_id, menu_id) VALUES ("
+                            + order.getOrderID() + ", '"
+                            + item.getMenuId() + "');");
+                }
+            }
+
         }
         catch (SQLException e) {
             throw new RuntimeException(e);
@@ -117,6 +138,14 @@ public class OrderDaoImpl implements OrderDao {
                     + order.getWaiter().getId() + ", "
                     + order.getCafe().getId() + ", "
                     + order.getPaymentType().getIdPaymentType() + ");");
+
+            if (order.getMenuItemsList() != null){
+                for (MenuItems item : order.getMenuItemsList()) {
+                    statement.execute("INSERT INTO Order_items (order_id, menu_id) VALUES ("
+                            + order.getOrderID() + ", '"
+                            + item.getMenuId() + "');");
+                }
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -126,6 +155,10 @@ public class OrderDaoImpl implements OrderDao {
      public void delete(Integer id) {
         try (Connection connection = DBCPDataSource.getConnection()) {
             Statement statement = connection.createStatement();
+            Order order = getEntityById(id);
+            if (order.getMenuItemsList() != null) {
+                statement.execute("DELETE FROM Order_items WHERE order_id=" + id);
+            }
             statement.execute("DELETE FROM `Order` WHERE order_id=" + id);
         } catch (SQLException e) {
             throw new RuntimeException(e);
