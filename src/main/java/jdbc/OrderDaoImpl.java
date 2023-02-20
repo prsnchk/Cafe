@@ -4,6 +4,8 @@ import connectionPool.DBCPDataSource;
 import dao.Dao;
 import dao.OrderDao;
 import model.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -13,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OrderDaoImpl implements OrderDao {
+    Logger logger = LogManager.getLogger(OrderDaoImpl.class);
 
     CustomerDaoImpl customerDaoImpl = new CustomerDaoImpl();
     WaiterDaoImpl waiterDaoImpl = new WaiterDaoImpl();
@@ -22,6 +25,7 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public List<Order> getAll() {
+        logger.info("Order - getAll() - called.");
         List<Order> orders = new ArrayList<>();
         try (Connection connection = DBCPDataSource.getConnection()) {
             Statement statement = connection.createStatement();
@@ -51,6 +55,7 @@ public class OrderDaoImpl implements OrderDao {
                 orders.add(newOrder);
             }
         } catch (SQLException e) {
+            logger.error(e);
             throw new RuntimeException(e);
         }
         return orders;
@@ -58,7 +63,11 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public Order getEntityById (Integer id) {
+
+        logger.info("Order - getEntityById() - called.");
+
         Order receivedOrder= new Order();
+
         try (Connection connection = DBCPDataSource.getConnection()) {
             Statement statement = connection.createStatement();
             statement.executeQuery("SELECT * FROM `Order` WHERE order_id = " + id);
@@ -95,6 +104,7 @@ public class OrderDaoImpl implements OrderDao {
             }
 
         } catch (SQLException e) {
+            logger.error(e);
             throw new RuntimeException(e);
         }
         return receivedOrder;
@@ -102,6 +112,7 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public void update(Order order) {
+        logger.info("Order - update() - called.");
         try (Connection connection = DBCPDataSource.getConnection()) {
             Statement statement = connection.createStatement();
             statement.execute("UPDATE `Order` SET price= " + order.getPrice() + ", "
@@ -122,6 +133,7 @@ public class OrderDaoImpl implements OrderDao {
 
         }
         catch (SQLException e) {
+            logger.error(e);
             throw new RuntimeException(e);
         }
     }
@@ -129,6 +141,8 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public void save(Order order) {
+        logger.info("Order - save() - called.");
+        logger.info(order);
         try (Connection connection = DBCPDataSource.getConnection()) {
             Statement statement = connection.createStatement();
             statement.execute("INSERT INTO `Order` (order_id, price, customer_id, waiter_id, cafe_id, payment_type_id ) VALUES ("
@@ -147,12 +161,14 @@ public class OrderDaoImpl implements OrderDao {
                 }
             }
         } catch (SQLException e) {
+            logger.error(e);
             throw new RuntimeException(e);
         }
     }
 
      @Override
      public void delete(Integer id) {
+         logger.info("Order - delete() - called.");
         try (Connection connection = DBCPDataSource.getConnection()) {
             Statement statement = connection.createStatement();
             Order order = getEntityById(id);
@@ -161,6 +177,7 @@ public class OrderDaoImpl implements OrderDao {
             }
             statement.execute("DELETE FROM `Order` WHERE order_id=" + id);
         } catch (SQLException e) {
+            logger.error(e);
             throw new RuntimeException(e);
         }
      }

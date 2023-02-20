@@ -5,6 +5,8 @@ import dao.CustomerDao;
 import dao.Dao;
 import model.Customer;
 import model.LoyaltyCard;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 
 import java.sql.Connection;
@@ -16,10 +18,13 @@ import java.util.List;
 
 public class CustomerDaoImpl implements CustomerDao {
 
+    Logger logger = LogManager.getLogger(CustomerDaoImpl.class);
+
     LoyaltyCardDaoImpl loyaltyCardDaoImpl = new LoyaltyCardDaoImpl();
 
     @Override
     public List<Customer> getAll() {
+        logger.info("Customer - getAll() - called.");
         List<Customer> customers = new ArrayList<>();
         try (Connection connection = DBCPDataSource.getConnection()) {
             Statement statement = connection.createStatement();
@@ -40,14 +45,17 @@ public class CustomerDaoImpl implements CustomerDao {
 
                 customers.add(newCustomer);
             }
+            logger.info(customers);
             return customers;
         } catch (SQLException e) {
+            logger.error(e);
             throw new RuntimeException(e);
         }
     }
 
     @Override
     public Customer getEntityById (Integer id) {
+        logger.info("Customer - getEntityById() - called.");
         Customer receivedCustomer = new Customer();
         try (Connection connection = DBCPDataSource.getConnection()) {
             Statement statement = connection.createStatement();
@@ -65,14 +73,18 @@ public class CustomerDaoImpl implements CustomerDao {
                 LoyaltyCard loyaltyCard = loyaltyCardDaoImpl.getEntityById(loyaltyCardId);
                 receivedCustomer.setLoyaltyCard(loyaltyCard);
             }
+            logger.info(receivedCustomer);
             return receivedCustomer;
         } catch (SQLException e) {
+            logger.error(e);
             throw new RuntimeException(e);
         }
     }
 
     @Override
     public void update (Customer customer) {
+        logger.info("Customer - update() - called.");
+        logger.info(customer);
         try (Connection connection = DBCPDataSource.getConnection()) {
             Statement statement = connection.createStatement();
             statement.execute("UPDATE Customer SET first_name = '" + customer.getFirstName() + "', "
@@ -83,6 +95,7 @@ public class CustomerDaoImpl implements CustomerDao {
                             + "WHERE id_customer = " + customer.getCustomerId() + ";");
         }
         catch (SQLException e) {
+            logger.error(e);
             throw new RuntimeException(e);
         }
     }
@@ -90,6 +103,8 @@ public class CustomerDaoImpl implements CustomerDao {
 
     @Override
     public void save(Customer customer) {
+        logger.info("Cafe - save() - called.");
+        logger.info(customer);
         try (Connection connection = DBCPDataSource.getConnection()) {
             Statement statement = connection.createStatement();
             statement.execute("INSERT INTO Customer (id_customer, first_name, second_name, phone, email, loyalty_card_id ) VALUES ("
@@ -100,6 +115,7 @@ public class CustomerDaoImpl implements CustomerDao {
                     + customer.getEmail() + "', "
                     + customer.getLoyaltyCard().getIdLoyaltyCard() + ");");
         } catch (SQLException e) {
+            logger.error(e);
             throw new RuntimeException(e);
         }
 
@@ -107,10 +123,12 @@ public class CustomerDaoImpl implements CustomerDao {
 
     @Override
     public void delete(Integer id) {
+        logger.info("Customer - delete() - called.");
         try (Connection connection = DBCPDataSource.getConnection()) {
             Statement statement = connection.createStatement();
             statement.execute("DELETE FROM Customer WHERE id_customer=" + id);
         } catch (SQLException e) {
+            logger.error(e);
             throw new RuntimeException(e);
         }
     }
